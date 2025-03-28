@@ -4,6 +4,8 @@ import 'package:moula_manager/widgets/zone_info_depenses_exceptionnelles.dart';
 import 'package:moula_manager/pages/ajouter_depense.dart';
 import 'package:moula_manager/pages/stats.dart';
 
+import '../database/depense_database.dart';
+
 //Classe d'état pour le calculateur d'IMC. Elle contient les champs de saisie pour le poids et la taille, le résultat de l'IMC et son interprétation
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -24,7 +26,7 @@ class _MenuState extends State<Menu> {
         centerTitle: true,
       ),
       body: Column(
-        children: [ZoneInfoDepensesClassiques(),
+        children: [ZoneInfoDepensesClassiques(database: DepenseDatabase.instance,),
           Switch(value: _switchInfo, onChanged: (bool value){
             setState(() {
               _switchInfo=value;
@@ -43,7 +45,7 @@ class _MenuState extends State<Menu> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Statistiques()),
+                  MaterialPageRoute(builder: (context) => Statistiques(database: DepenseDatabase.instance)),
                 );
               },
               child: Text('Afficher les stats',style: TextStyle(fontSize: 30.0),))

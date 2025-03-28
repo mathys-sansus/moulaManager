@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../model/depense.dart';
+import 'dart:async'; // Importez dart:async pour StreamController
 
 /// Implémentation du pattern Singleton pour la gestion de la base de données des notes.
 /// Cette classe assure qu'une seule instance de NotesDatabase existe dans l'application.
@@ -18,12 +19,25 @@ class DepenseDatabase {
   /// Nom de la table des notes
   static const String _tableDepenses = 'depenses';
 
+  /// Contrôleur de flux pour les dépenses
+  final _depensesStreamController = StreamController<List<Depense>>.broadcast();
+
+  /// Flux de dépenses
+  Stream<List<Depense>> get depensesStream => _depensesStreamController.stream;
+
   /// Constructeur privé pour empêcher l'instanciation directe (pattern Singleton)
-  DepenseDatabase._init();
+  DepenseDatabase._init() {
+    // Initialise le flux avec les données existantes
+    _initStream();
+  }
+
+  Future<void> _initStream() async {
+    _depensesStreamController.add(await _getDepenses());
+  }
 
   /// Getter privé pour accéder à l'instance unique de la base de données
   /// Crée la base de données si elle n'existe pas encore
-  Future<Database> get _database async {
+  Future<Database> get database async {
     if (_dbInstance != null) return _dbInstance!;
     _dbInstance = await _initDB(_dbFileName);
     return _dbInstance!;
@@ -69,6 +83,12 @@ class DepenseDatabase {
     ''');
   }
 
+  Future<List<Depense>> _getDepenses() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(_tableDepenses);
+    return List.generate(maps.length, (i) => Depense.fromMap(maps[i]));
+  }
+
   /// Insère une nouvelle note dans la base de données
   ///
   /// Cette méthode ajoute une nouvelle note avec un titre et un contenu.
@@ -77,8 +97,11 @@ class DepenseDatabase {
   ///
   /// Le paramètre [note] est l'objet Note à insérer dans la base de données
   Future<int> insertDepense(Depense depense) async {
-    final db = await _database;
-    return await db.insert(_tableDepenses, depense.toMap());
+    final db = await database;
+    final id = await db.insert(_tableDepenses, depense.toMap());
+    print("Dépense insérée, notification du Stream...");
+    _depensesStreamController.add(await _getDepenses()); // Notifie le Stream
+    return id;
   }
 
   /// Récupère toutes les notes de la base de données
@@ -87,7 +110,7 @@ class DepenseDatabase {
   /// plus type-safe et plus facile à utiliser dans l'interface utilisateur.
   /// Chaque note contient son ID, son titre et son contenu.
   Future<List<Depense>> getAllDepenses() async {
-    final db = await _database;
+    final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(_tableDepenses);
     return List.generate(maps.length, (i) => Depense.fromMap(maps[i]));
   }
@@ -100,7 +123,21 @@ class DepenseDatabase {
   ///
   /// Le paramètre [id] correspond à l'identifiant unique de la note à supprimer
   Future<void> deleteDepense(int id) async {
-    final db = await _database;
+    final db = await database;
     await db.delete(_tableDepenses, where: 'id = ?', whereArgs: [id]);
+    print("Dépense supprimée, notification du Stream...");
+    _depensesStreamController.add(await _getDepenses()); // Notifie le Stream
+  }
+
+  Future<void> updateDepense(Depense depense) async {
+    final db = await database;
+    await db.update(
+      _tableDepenses,
+      depense.toMap(),
+      where: 'id = ?',
+      whereArgs: [depense.id],
+    );
+    print("Dépense mise à jour, notification du Stream...");
+    _depensesStreamController.add(await _getDepenses());
   }
 }

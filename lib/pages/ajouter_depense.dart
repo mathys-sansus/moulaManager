@@ -13,25 +13,35 @@ class _AjouterDepenseState extends State<AjouterDepense> {
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _montantController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _exceptionnelController = TextEditingController();
+  bool _switchExceptionnelle = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Ajouter une dépense')),
       body: Center(
-        child: Column(
-          children: [
-            ZoneSaisieAjoutRadioButton(
-              typeController: _typeController,
-            ),
-            ZoneSaisieAjout(
-              montantController: _montantController,
-              descriptionController: _descriptionController,
-              exceptionnelController: _exceptionnelController,
-            )
-          ],
-        )
+          child: Column(
+            children: [
+              ZoneSaisieAjoutRadioButton(
+                typeController: _typeController,
+              ),
+              ZoneSaisieAjout(
+                montantController: _montantController,
+                descriptionController: _descriptionController,
+              ),
+              Switch(value: _switchExceptionnelle, onChanged: (bool value){
+                setState(() {
+                  _switchExceptionnelle=value;
+                });
+              }),
+              ElevatedButton(
+                  onPressed: (){
+
+                  },
+                  child: Text('Valider',style: TextStyle(fontSize: 30.0),)
+              )
+            ],
+          )
       ),
     );
   }

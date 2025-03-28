@@ -17,29 +17,30 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, //Empêche le clavier de pousser les widgets vers le haut. Le clavier passera par-dessus les widgets
-      appBar: AppBar(
-        title: const Text('moulaManager'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [ZoneInfoDepensesClassiques(),
-          Switch(value: _switchInfo, onChanged: (bool value){
-            setState(() {
-              _switchInfo=value;
-            });
-          }),
-          if (_switchInfo) const ZoneInfoDepensesExceptionnelles(),
-          ElevatedButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AjouterDepense()),
-                );
-              },
-              child: Text('Ajouter une dépense !',style: TextStyle(fontSize: 30.0),))
-        ]
-      )
+        resizeToAvoidBottomInset: false, //Empêche le clavier de pousser les widgets vers le haut. Le clavier passera par-dessus les widgets
+        appBar: AppBar(
+          title: const Text('moulaManager'),
+          centerTitle: true,
+        ),
+        body: Column(
+            children: [ZoneInfoDepensesClassiques(),
+              Switch(value: _switchInfo, onChanged: (bool value){
+                setState(() {
+                  _switchInfo=value;
+                });
+              }),
+              if (_switchInfo) const ZoneInfoDepensesExceptionnelles(),
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AjouterDepense()),
+                    );
+                  },
+                  child: Text('Ajouter une dépense !',style: TextStyle(fontSize: 30.0),)
+              )
+            ]
+        )
     );
   }
 }

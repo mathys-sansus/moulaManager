@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Imc Calculator',
+      title: 'Moula Manager',
       theme: ThemeData(
         primarySwatch: Colors.green,
         appBarTheme: const AppBarTheme(

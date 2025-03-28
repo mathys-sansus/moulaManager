@@ -74,14 +74,23 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             },
           ),
         ),
-        if (_type == TypeDepense.Autre) TextField(
-          controller: widget.typeController,
-          keyboardType: TextInputType.text,
-          decoration: const InputDecoration(
-            labelText: 'Type ...',
-            border: OutlineInputBorder(),
+        if (_type == TypeDepense.Autre) Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(height: 16),
+              TextField(
+                controller: widget.typeController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  labelText: 'Type ...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
   }

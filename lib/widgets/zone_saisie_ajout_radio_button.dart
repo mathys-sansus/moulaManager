@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum TypeDepense { Alimentation, Voiture, Restaurant, Autre}
+enum TypeDepense { Automobile, Alimentation, Logement, Autre}
 
 class ZoneSaisieAjoutRadioButton extends StatefulWidget {
   final TextEditingController typeController;
@@ -33,9 +33,9 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
           ),
         ),
         ListTile(
-          title: const Text('Voiture'),
+          title: const Text('Automobile'),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Voiture,
+            value: TypeDepense.Automobile,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
@@ -48,9 +48,9 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
           ),
         ),
         ListTile(
-          title: const Text('Restauration'),
+          title: const Text('Logement'),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Restaurant,
+            value: TypeDepense.Logement,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {

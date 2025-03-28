@@ -64,7 +64,7 @@ class DepenseDatabase {
         type TEXT NOT NULL,
         montant REAL NOT NULL,
         description TEXT NOT NULL,
-        exceptionnelle INTEGER NOT NULL DEFAULT 0 -- Boolean (0 = false, 1 = true)
+        exceptionnelle INTEGER NOT NULL DEFAULT 0
       );
     ''');
   }
@@ -76,7 +76,7 @@ class DepenseDatabase {
   /// la modifier ou la supprimer ultérieurement.
   ///
   /// Le paramètre [note] est l'objet Note à insérer dans la base de données
-  Future<int> insertNote(Depense depense) async {
+  Future<int> insertDepense(Depense depense) async {
     final db = await _database;
     return await db.insert(_tableDepenses, depense.toMap());
   }
@@ -86,7 +86,7 @@ class DepenseDatabase {
   /// Cette méthode retourne une liste d'objets Note, ce qui rend le code
   /// plus type-safe et plus facile à utiliser dans l'interface utilisateur.
   /// Chaque note contient son ID, son titre et son contenu.
-  Future<List<Depense>> getAllNotes() async {
+  Future<List<Depense>> getAllDepenses() async {
     final db = await _database;
     final List<Map<String, dynamic>> maps = await db.query(_tableDepenses);
     return List.generate(maps.length, (i) => Depense.fromMap(maps[i]));
@@ -99,7 +99,7 @@ class DepenseDatabase {
   /// dans l'interface utilisateur.
   ///
   /// Le paramètre [id] correspond à l'identifiant unique de la note à supprimer
-  Future<void> deleteNote(int id) async {
+  Future<void> deleteDepense(int id) async {
     final db = await _database;
     await db.delete(_tableDepenses, where: 'id = ?', whereArgs: [id]);
   }

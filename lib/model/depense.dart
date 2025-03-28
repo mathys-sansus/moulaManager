@@ -1,9 +1,9 @@
 class Depense {
   final int? id; // Peut être null lors de la création d'une nouvelle note
   final String type;
-  final int montant;
+  final double montant;
   final String? description;
-  final bool exceptionnel;
+  final int exceptionnel;
 
   Depense({
     this.id,

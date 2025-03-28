@@ -15,35 +15,67 @@ class PieChartSample3State extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Graphique de vos dépenses")),
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: 1.3,
-          child: PieChart(
-            PieChartData(
-              pieTouchData: PieTouchData(
-                touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                  setState(() {
-                    if (!event.isInterestedForInteractions ||
-                        pieTouchResponse == null ||
-                        pieTouchResponse.touchedSection == null) {
-                      touchedIndex = -1;
-                      return;
-                    }
-                    touchedIndex =
-                        pieTouchResponse.touchedSection!.touchedSectionIndex;
-                  });
-                },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AspectRatio(
+            aspectRatio: 1.3,
+            child: PieChart(
+              PieChartData(
+                pieTouchData: PieTouchData(
+                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                    setState(() {
+                      if (!event.isInterestedForInteractions ||
+                          pieTouchResponse == null ||
+                          pieTouchResponse.touchedSection == null) {
+                        touchedIndex = -1;
+                        return;
+                      }
+                      touchedIndex =
+                          pieTouchResponse.touchedSection!.touchedSectionIndex;
+                    });
+                  },
+                ),
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                sectionsSpace: 0,
+                centerSpaceRadius: 0,
+                sections: showingSections(),
               ),
-              borderData: FlBorderData(
-                show: false,
-              ),
-              sectionsSpace: 0,
-              centerSpaceRadius: 0,
-              sections: showingSections(),
             ),
           ),
-        ),
+          const SizedBox(height: 20),
+          // Ajout de la légende
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildLegendItem(Colors.blue, "Automobile"),
+              const SizedBox(width: 10),
+              _buildLegendItem(Colors.orangeAccent, "Alimentation"),
+              const SizedBox(width: 10),
+              _buildLegendItem(Colors.green, "Logement"),
+            ],
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildLegendItem(Color color, String text) {
+    return Row(
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+        const SizedBox(width: 5),
+        Text(text, style: const TextStyle(fontSize: 16)),
+      ],
     );
   }
 
@@ -77,7 +109,7 @@ class PieChartSample3State extends State {
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.yellow,
+            color: Colors.orangeAccent,
             value: 30,
             title: '30%',
             radius: radius,

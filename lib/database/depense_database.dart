@@ -32,7 +32,9 @@ class DepenseDatabase {
   }
 
   Future<void> _initStream() async {
-    _depensesStreamController.add(await _getDepenses());
+    _depensesStreamController.addStream(
+      Stream.fromFuture(_getDepenses()),
+    );
   }
 
   /// Getter privé pour accéder à l'instance unique de la base de données
@@ -128,8 +130,19 @@ class DepenseDatabase {
     print("Dépense supprimée, notification du Stream...");
     _depensesStreamController.add(await _getDepenses()); // Notifie le Stream
   }
+  /// Supprime toutes les dépenses de la base de données
+  ///
+  /// Cette méthode permet de supprimer toutes les dépenses.
+  /// Elle est utilisée lorsque l'utilisateur clique sur le bouton de suppression
+  /// dans la page qui liste ses dépenses.
+  Future<void> deleteAllDepenses() async {
+    final db = await database;
+    await db.delete(_tableDepenses);
+    print("Dépenses supprimées, notification du Stream...");
+    _depensesStreamController.add(await _getDepenses()); // Notifie le Stream
+  }
 
-  Future<void> updateDepense(Depense depense) async {
+  /* Future<void> updateDepense(Depense depense) async {
     final db = await database;
     await db.update(
       _tableDepenses,
@@ -139,5 +152,5 @@ class DepenseDatabase {
     );
     print("Dépense mise à jour, notification du Stream...");
     _depensesStreamController.add(await _getDepenses());
-  }
+  }  */
 }

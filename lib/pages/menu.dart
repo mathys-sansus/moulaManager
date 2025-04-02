@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moula_manager/widgets/zone_info_depenses_classiques.dart';
 import 'package:moula_manager/widgets/zone_info_depenses_exceptionnelles.dart';
 import 'package:moula_manager/pages/ajouter_depense.dart';
+import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
 
 import '../database/depense_database.dart';
@@ -48,7 +49,15 @@ class _MenuState extends State<Menu> {
                   MaterialPageRoute(builder: (context) => Statistiques(database: DepenseDatabase.instance)),
                 );
               },
-              child: Text('Afficher les stats',style: TextStyle(fontSize: 30.0),))
+              child: Text('Afficher les stats',style: TextStyle(fontSize: 30.0),)),
+          ElevatedButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListeDepenses(database: DepenseDatabase.instance)),
+                );
+              },
+              child: Text('Afficher les dernières dépenses',style: TextStyle(fontSize: 30.0),)),
         ]
       )
     );

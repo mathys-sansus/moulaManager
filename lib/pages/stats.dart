@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:moula_manager/database/depense_database.dart'; // Importez votre base de données
+import 'package:moula_manager/database/depense_database.dart';
 
 class Statistiques extends StatefulWidget {
-  const Statistiques({super.key, required this.database}); // Acceptez l'instance de la base de données
+  const Statistiques({super.key, required this.database});
   final DepenseDatabase database;
 
   @override
@@ -27,8 +27,8 @@ class PieChartSample3State extends State<Statistiques> {
     double logement = 0;
     double autre = 0;
     for (var depense in depenses) {
-      // Utilisez la notation pointée pour accéder aux propriétés de l'objet Depense
-      switch (depense.type) {  // Assurez-vous que 'type' correspond au nom de la propriété dans votre classe Depense
+
+      switch (depense.type) {
         case 'Automobile':
           automobile += depense.montant;
           break;

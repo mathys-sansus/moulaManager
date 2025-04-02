@@ -15,6 +15,12 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
   TypeDepense? _type = TypeDepense.Food;
 
   @override
+  void initState() {
+    super.initState();
+    widget.typeController.text = TypeDepense.Food.name;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[

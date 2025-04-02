@@ -22,14 +22,6 @@ class _AjouterDepenseState extends State<AjouterDepense> {
     super.initState();
   }
 
-  Future<void> _supp() async {
-    setState(() async {
-      for (int i = 0; i < 100; i++) {
-        await DepenseDatabase.instance.deleteDepense(i);
-      }
-    });
-  }
-
   Future<void> _addDepense() async {
     if (_typeController.text.isEmpty || _montantController.text.isEmpty) {
       return;
@@ -46,7 +38,17 @@ class _AjouterDepenseState extends State<AjouterDepense> {
       description: _descriptionController.text,
     );
 
-    await DepenseDatabase.instance.insertDepense(depense);
+    try {
+      await DepenseDatabase.instance.insertDepense(depense);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.addExpenseSuccess)),
+      );
+    } catch (e) {
+      //Gérer l'erreur
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("${AppLocalizations.of(context)!.errorAddingExpense}: $e")),
+      );
+    }
     _typeController.clear();
     _montantController.clear();
     _descriptionController.clear();
@@ -55,6 +57,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.addExpense)),
       body: Column(
         children: [
@@ -66,9 +69,15 @@ class _AjouterDepenseState extends State<AjouterDepense> {
             descriptionController: _descriptionController,
           ),
           ElevatedButton(
-            onPressed: _addDepense,
-            child: Text(AppLocalizations.of(context)!.confirm, style: TextStyle(fontSize: 30.0)),
-          ),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _addDepense();
+            },
+            child: Text(
+              AppLocalizations.of(context)!.confirm,
+              style: TextStyle(fontSize: 30.0),
+            ),
+          )
         ],
       ),
     );

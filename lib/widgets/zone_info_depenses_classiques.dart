@@ -29,13 +29,13 @@ class _ZoneInfoDepensesClassiquesState extends State<ZoneInfoDepensesClassiques>
 
           for (var depense in depenses) {
             switch (depense.type) {
-              case 'Alimentation':
+              case 'Food':
                 alimentation += depense.montant;
                 break;
-              case 'Automobile':
+              case 'Car':
                 automobile += depense.montant;
                 break;
-              case 'Logement':
+              case 'Housing':
                 logement += depense.montant;
                 break;
             }

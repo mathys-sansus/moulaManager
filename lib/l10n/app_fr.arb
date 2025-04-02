@@ -17,5 +17,7 @@
  "titleListExpenses" : "Liste des dépenses",
  "buttonRemoveAllExpenses" : "Supprimer toutes les dépenses",
  "errorLoadingExpenses" : "Erreur lors du chargement des dépenses",
- "errorDeletingExpense" : "Erreur lors de la suppression"
+ "errorDeletingExpense" : "Erreur lors de la suppression",
+ "errorAddingExpense" : "Erreur lors de l'ajout",
+ "addExpenseSuccess" : "Dépense ajoutée avec succès"
 }

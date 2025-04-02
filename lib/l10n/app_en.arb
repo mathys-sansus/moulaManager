@@ -17,5 +17,7 @@
  "titleListExpenses" : "List of expenses",
  "buttonRemoveAllExpenses" : "Remove all expenses",
  "errorLoadingExpenses" : "Error loading expenses",
- "errorDeletingExpense" : "Error deleting expense"
+ "errorDeletingExpense" : "Error deleting expense",
+ "errorAddingExpense" : "Error adding expense",
+ "addExpenseSuccess" : "Expense added successfully"
 }

@@ -23,32 +23,32 @@ class PieChartSample3State extends State<Statistiques> {
 
   Future<List<Map<String, dynamic>>> _getDepensesParCategorie() async {
     final depenses = await widget.database.getAllDepenses();
-    double automobile = 0;
-    double alimentation = 0;
-    double logement = 0;
-    double autre = 0;
+    double car = 0;
+    double food = 0;
+    double housing = 0;
+    double other = 0;
     for (var depense in depenses) {
       // Utilisez la notation pointée pour accéder aux propriétés de l'objet Depense
       switch (depense.type) {  // Assurez-vous que 'type' correspond au nom de la propriété dans votre classe Depense
-        case 'Automobile':
-          automobile += depense.montant;
+        case 'Car':
+          car += depense.montant;
           break;
-        case 'Alimentation':
-          alimentation += depense.montant;
+        case 'Food':
+          food += depense.montant;
           break;
-        case 'Logement':
-          logement += depense.montant;
+        case 'Housing':
+          housing += depense.montant;
           break;
         default :
-          autre += depense.montant;
+          other += depense.montant;
       }
     }
-    double total = automobile + alimentation + logement + autre;
+    double total = car + food + housing + other;
     return [
-      {'categorie': 'Automobile', 'montant': automobile, 'pourcentage': (total > 0) ? (automobile / total) * 100 : 0},
-      {'categorie': 'Alimentation', 'montant': alimentation, 'pourcentage': (total > 0) ? (alimentation / total) * 100 : 0},
-      {'categorie': 'Logement', 'montant': logement, 'pourcentage': (total > 0) ? (logement / total) * 100 : 0},
-      {'categorie': 'Autre', 'montant': autre, 'pourcentage': (total > 0) ? (autre / total) * 100 : 0},
+      {'categorie': 'Car', 'montant': car, 'pourcentage': (total > 0) ? (car / total) * 100 : 0},
+      {'categorie': 'Food', 'montant': food, 'pourcentage': (total > 0) ? (food / total) * 100 : 0},
+      {'categorie': 'Housing', 'montant': housing, 'pourcentage': (total > 0) ? (housing / total) * 100 : 0},
+      {'categorie': 'Other', 'montant': other, 'pourcentage': (total > 0) ? (other / total) * 100 : 0},
     ];
   }
 

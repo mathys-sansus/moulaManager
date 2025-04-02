@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum TypeDepense { Automobile, Alimentation, Logement, Autre}
 
@@ -18,7 +19,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
     return Column(
       children: <Widget>[
         ListTile(
-          title: const Text('Alimentation'),
+          title: Text(AppLocalizations.of(context)!.food),
           leading: Radio<TypeDepense>(
             value: TypeDepense.Alimentation,
             groupValue: _type,
@@ -33,7 +34,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
           ),
         ),
         ListTile(
-          title: const Text('Automobile'),
+          title: Text(AppLocalizations.of(context)!.car),
           leading: Radio<TypeDepense>(
             value: TypeDepense.Automobile,
             groupValue: _type,
@@ -48,7 +49,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
           ),
         ),
         ListTile(
-          title: const Text('Logement'),
+          title: Text(AppLocalizations.of(context)!.housing),
           leading: Radio<TypeDepense>(
             value: TypeDepense.Logement,
             groupValue: _type,
@@ -63,12 +64,13 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
           ),
         ),
         ListTile(
-          title: const Text('Autre'),
+          title: Text(AppLocalizations.of(context)!.other),
           leading: Radio<TypeDepense>(
             value: TypeDepense.Autre,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
+                widget.typeController.text = "";
                 _type = value;
               });
             },
@@ -84,7 +86,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
                 controller: widget.typeController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
-                  labelText: 'Type ...',
+                  labelText: 'Type',
                   border: OutlineInputBorder(),
                 ),
               ),

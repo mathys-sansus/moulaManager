@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ZoneSaisieAjout extends StatelessWidget {
   final TextEditingController montantController;
@@ -20,18 +21,18 @@ class ZoneSaisieAjout extends StatelessWidget {
             TextField(
               controller: montantController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'montant (en €)',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.amountField,
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Description (facultatif)',
-                border: OutlineInputBorder(),
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.descriptionField,
+                border: const OutlineInputBorder(),
               ),
             ),
           ],

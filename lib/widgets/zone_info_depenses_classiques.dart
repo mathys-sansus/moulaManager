@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../database/depense_database.dart';
 import '../model/depense.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ZoneInfoDepensesClassiques extends StatefulWidget {
   const ZoneInfoDepensesClassiques({super.key, required this.database});
@@ -43,21 +44,21 @@ class _ZoneInfoDepensesClassiquesState extends State<ZoneInfoDepensesClassiques>
           return Column(
             children: [
               Text(
-                'Alimentation : ${alimentation.toStringAsFixed(2)}€ (max : 250€)',
+                '${AppLocalizations.of(context)!.food} : ${alimentation.toStringAsFixed(2)}€ (max : 250€)',
                 style: const TextStyle(
                   fontSize: 25,
                 ),
               ),
               const SizedBox(height: 24),
               Text(
-                'Automobile : ${automobile.toStringAsFixed(2)}€ (max : 180€)',
+                '${AppLocalizations.of(context)!.car} : ${automobile.toStringAsFixed(2)}€ (max : 180€)',
                 style: const TextStyle(
                   fontSize: 25,
                 ),
               ),
               const SizedBox(height: 24),
               Text(
-                'Logement : ${logement.toStringAsFixed(2)}€ (max : 50€)',
+                '${AppLocalizations.of(context)!.housing} : ${logement.toStringAsFixed(2)}€ (max : 50€)',
                 style: const TextStyle(
                   fontSize: 25,
                 ),
@@ -66,7 +67,7 @@ class _ZoneInfoDepensesClassiquesState extends State<ZoneInfoDepensesClassiques>
             ],
           );
         } else {
-          return const Text("Aucune dépense"); // Gère le cas où il n'y a pas de données initiales
+          return Text(AppLocalizations.of(context)!.noExpense); // Gère le cas où il n'y a pas de données initiales
         }
       },
     );

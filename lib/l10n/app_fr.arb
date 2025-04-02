@@ -1,0 +1,21 @@
+{
+ "helloWorld": "Bonjour le monde !",
+ "appTitle" : "Titre de l’application",
+ "addExpense" : "Ajouter une dépense",
+ "food" : "Alimentation",
+ "car" : "Automobile",
+ "housing" : "Logement",
+ "other" : "Autre",
+ "amountField" : "Montant (en €)",
+ "descriptionField" : "Desription (optionnel)",
+ "confirm" : "Valider",
+ "buttonAddExpense" : "Ajouter une dépense !",
+ "buttonStats" : "Afficher les stats",
+ "noExpense" : "Aucun dépense",
+ "titleStats" : "Synthèse de vos dépenses",
+ "buttonShowExpenses" : "Afficher les dépenses",
+ "titleListExpenses" : "Liste des dépenses",
+ "buttonRemoveAllExpenses" : "Supprimer toutes les dépenses",
+ "errorLoadingExpenses" : "Erreur lors du chargement des dépenses",
+ "errorDeletingExpense" : "Erreur lors de la suppression"
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moula_manager/database/depense_database.dart';
 import 'package:moula_manager/model/depense.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListeDepenses extends StatefulWidget {
   const ListeDepenses({Key? key, required this.database}) : super(key: key);
@@ -30,7 +31,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
       });
     } catch (e) {
       setState(() {
-        _errorMessage = "Erreur lors du chargement des dépenses: $e";
+        _errorMessage = "${AppLocalizations.of(context)!.errorLoadingExpenses}: $e";
         _isLoading = false;
       });
     }
@@ -40,7 +41,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Liste des Dépenses'),
+        title: Text(AppLocalizations.of(context)!.titleListExpenses),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -53,7 +54,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
               _deleteAllDepenses();
             },
             icon: const Icon(Icons.delete_forever, color: Colors.white),
-            label: const Text('Supprimer toutes les dépenses'),
+            label: Text(AppLocalizations.of(context)!.buttonRemoveAllExpenses),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
               foregroundColor: Colors.white,
@@ -62,7 +63,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
           ),
           Expanded(  // Utilisation de Expanded pour que la liste prenne l'espace restant
             child: _depenses.isEmpty
-                ? const Center(child: Text('Aucune dépense enregistrée.'))
+                ? Center(child: Text(AppLocalizations.of(context)!.noExpense))
                 : ListView.builder(
               itemCount: _depenses.length,
               itemBuilder: (context, index) {
@@ -96,7 +97,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
     } catch (e) {
       // Gérer l'erreur de suppression (par exemple, afficher un SnackBar)
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erreur lors de la suppression: $e")),
+        SnackBar(content: Text("${AppLocalizations.of(context)!.errorDeletingExpense}: $e")),
       );
     }
   }
@@ -109,7 +110,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
     } catch (e) {
       // Gérer l'erreur de suppression (par exemple, afficher un SnackBar)
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erreur lors de la suppression: $e")),
+        SnackBar(content: Text("${AppLocalizations.of(context)!.errorDeletingExpense}: $e")),
       );
     }
   }

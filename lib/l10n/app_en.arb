@@ -1,0 +1,21 @@
+{
+ "helloWorld": "Hello World!",
+ "appTitle" : "The App Title",
+ "addExpense" : "Add an expense",
+ "food" : "Food",
+ "car" : "Car",
+ "housing" : "Housing",
+ "other" : "Other",
+ "amountField" : "Amount (in €)",
+ "descriptionField" : "Description (optional)",
+ "confirm" : "Confirm",
+ "buttonAddExpense" : "Add an expense !",
+ "buttonStats" : "Show stats",
+ "noExpense" : "No expense yet",
+ "titleStats" : "Your spending chart",
+ "buttonShowExpenses" : "Show expenses",
+ "titleListExpenses" : "List of expenses",
+ "buttonRemoveAllExpenses" : "Remove all expenses",
+ "errorLoadingExpenses" : "Error loading expenses",
+ "errorDeletingExpense" : "Error deleting expense"
+}

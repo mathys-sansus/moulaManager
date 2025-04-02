@@ -3,14 +3,12 @@ class Depense {
   final String type;
   final double montant;
   final String? description;
-  final int exceptionnel;
 
   Depense({
     this.id,
     required this.type,
     required this.montant,
     required this.description,
-    required this.exceptionnel
   });
 
   /// Convertit une note en Map pour le stockage dans SQLite
@@ -20,7 +18,6 @@ class Depense {
       'type': type,
       'montant': montant,
       "description": description,
-      "exceptionnelle":exceptionnel
     };
   }
 
@@ -30,8 +27,7 @@ class Depense {
         id: map['id'],
         type: map['type'],
         montant: map['montant'],
-        description: map['description'],
-        exceptionnel: map['exceptionnelle']
+        description: map['description']
     );
   }
 }

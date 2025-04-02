@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moula_manager/widgets/zone_info_depenses_classiques.dart';
-import 'package:moula_manager/widgets/zone_info_depenses_exceptionnelles.dart';
 import 'package:moula_manager/pages/ajouter_depense.dart';
 import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../database/depense_database.dart';
 
@@ -33,7 +33,6 @@ class _MenuState extends State<Menu> {
               _switchInfo=value;
             });
           }),
-          if (_switchInfo) const ZoneInfoDepensesExceptionnelles(),
           ElevatedButton(
               onPressed: (){
                 Navigator.push(
@@ -41,7 +40,7 @@ class _MenuState extends State<Menu> {
                   MaterialPageRoute(builder: (context) => AjouterDepense()),
                 );
               },
-              child: Text('Ajouter une dépense !',style: TextStyle(fontSize: 30.0),)),
+              child: Text(AppLocalizations.of(context)!.buttonAddExpense,style: TextStyle(fontSize: 30.0),)),
           ElevatedButton(
               onPressed: (){
                 Navigator.push(
@@ -49,7 +48,7 @@ class _MenuState extends State<Menu> {
                   MaterialPageRoute(builder: (context) => Statistiques(database: DepenseDatabase.instance)),
                 );
               },
-              child: Text('Afficher les stats',style: TextStyle(fontSize: 30.0),)),
+              child: Text(AppLocalizations.of(context)!.buttonStats,style: TextStyle(fontSize: 30.0),)),
           ElevatedButton(
               onPressed: (){
                 Navigator.push(

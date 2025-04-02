@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moula_manager/widgets/zone_info_depenses_classiques.dart';
+import 'package:moula_manager/widgets/BudgetInfo.dart';
 import 'package:moula_manager/pages/ajouter_depense.dart';
 import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
@@ -27,12 +27,13 @@ class _MenuState extends State<Menu> {
         centerTitle: true,
       ),
       body: Column(
-        children: [ZoneInfoDepensesClassiques(database: DepenseDatabase.instance,),
+        children: [BudgetInfo(categories: ['food', 'car', 'housing'], database: DepenseDatabase.instance),
           Switch(value: _switchInfo, onChanged: (bool value){
             setState(() {
               _switchInfo=value;
             });
           }),
+          if (_switchInfo) BudgetInfo(database: DepenseDatabase.instance, categories: ['other']),
           ElevatedButton(
               onPressed: (){
                 Navigator.push(

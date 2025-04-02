@@ -185,7 +185,7 @@ class PieChartSample3State extends State<Statistiques> {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              'lib/images/food.jpg',
+              'lib/images/food.png',
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -204,7 +204,7 @@ class PieChartSample3State extends State<Statistiques> {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              'lib/images/home.png',
+              'lib/images/housing.png',
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -223,7 +223,7 @@ class PieChartSample3State extends State<Statistiques> {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              'lib/images/money.png',
+              'lib/images/other.png',
               size: widgetSize,
               borderColor: Colors.black,
             ),

@@ -25,6 +25,6 @@ flutter:
   generate: true
   assets:
     - lib/images/car.png
-    - lib/images/food.jpg
-    - lib/images/home.png
-    - lib/images/money.png
+    - lib/images/food.png
+    - lib/images/housing.png
+    - lib/images/other.png

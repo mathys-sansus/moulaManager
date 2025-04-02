@@ -56,7 +56,7 @@ class _MenuState extends State<Menu> {
                   MaterialPageRoute(builder: (context) => ListeDepenses(database: DepenseDatabase.instance)),
                 );
               },
-              child: Text('Afficher les dernières dépenses',style: TextStyle(fontSize: 30.0),)),
+              child: Text(AppLocalizations.of(context)!.buttonShowExpenses,style: TextStyle(fontSize: 30.0),)),
         ]
       )
     );

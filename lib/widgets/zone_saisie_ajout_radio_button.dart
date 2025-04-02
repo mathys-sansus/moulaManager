@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum TypeDepense { Automobile, Alimentation, Logement, Autre}
+enum TypeDepense { Car, Food, Housing, Other}
 
 class ZoneSaisieAjoutRadioButton extends StatefulWidget {
   final TextEditingController typeController;
@@ -12,7 +12,7 @@ class ZoneSaisieAjoutRadioButton extends StatefulWidget {
 }
 
 class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton> {
-  TypeDepense? _type = TypeDepense.Alimentation;
+  TypeDepense? _type = TypeDepense.Food;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,12 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
         ListTile(
           title: Text(AppLocalizations.of(context)!.food),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Alimentation,
+            value: TypeDepense.Food,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Autre) {
+                if (_type != TypeDepense.Other) {
                   widget.typeController.text = _type!.name;
                 }
               });
@@ -36,12 +36,12 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
         ListTile(
           title: Text(AppLocalizations.of(context)!.car),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Automobile,
+            value: TypeDepense.Car,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Autre) {
+                if (_type != TypeDepense.Other) {
                   widget.typeController.text = _type!.name;
                 }
               });
@@ -51,12 +51,12 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
         ListTile(
           title: Text(AppLocalizations.of(context)!.housing),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Logement,
+            value: TypeDepense.Housing,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Autre) {
+                if (_type != TypeDepense.Other) {
                   widget.typeController.text = _type!.name;
                 }
               });
@@ -66,7 +66,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
         ListTile(
           title: Text(AppLocalizations.of(context)!.other),
           leading: Radio<TypeDepense>(
-            value: TypeDepense.Autre,
+            value: TypeDepense.Other,
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
@@ -76,7 +76,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             },
           ),
         ),
-        if (_type == TypeDepense.Autre) Padding(
+        if (_type == TypeDepense.Other) Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

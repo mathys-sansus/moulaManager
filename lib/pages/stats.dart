@@ -63,9 +63,9 @@ class PieChartSample3State extends State<Statistiques> {
             final data = snapshot.data!;
             // Vérifiez si la liste 'data' est vide
             if (data.every((element) => element['montant'] == 0)) {
-              return const Center(
+              return Center(
                 child: Text(
-                  "Aucune dépense enregistrée",
+                  AppLocalizations.of(context)!.noExpense,
                   style: TextStyle(fontSize: 18),
                 ),
               );

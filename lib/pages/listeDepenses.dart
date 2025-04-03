@@ -5,8 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
 
 class ListeDepenses extends StatefulWidget {
-  const ListeDepenses({Key? key, required this.database}) : super(key: key);
+  const ListeDepenses({Key? key, required this.database, required this.valeurUnite, required this.boolSwitch}) : super(key: key);
   final DepenseDatabase database;
+  final double valeurUnite;
+  final bool boolSwitch;
 
   @override
   State<ListeDepenses> createState() => _ListeDepensesState();
@@ -184,7 +186,11 @@ class _ListeDepensesState extends State<ListeDepenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "titleListExpenses", parentContext: context,),
+      appBar: CustomAppBar(
+        title: "titleListExpenses",
+        parentContext: context,
+        valeurUnite: widget.valeurUnite,
+        boolSwitch: widget.boolSwitch),
       body: OrientationBuilder(
         builder: (context, orientation) {
           return orientation == Orientation.portrait

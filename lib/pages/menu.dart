@@ -17,6 +17,9 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   bool _switchValue = false;
+  double _valeur_dollar = 1.11;
+  double _valeur_euro = 1.00;
+  double _valeur_en_cour = 1.00; // Par défaut en euros
 
   // Méthode pour recharger les données de BudgetInfo
   void _refreshBudgetInfo() {
@@ -28,7 +31,12 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: "moulaManager", parentContext: context),
+      appBar: CustomAppBar(
+        title: "moulaManager",
+        parentContext: context,
+        valeurUnite: _valeur_en_cour,
+        boolSwitch: _switchValue
+      ),
       endDrawer: Drawer(
         child: ListView(
           children: <Widget>[
@@ -44,12 +52,13 @@ class _MenuState extends State<Menu> {
       ),
       body: Column(
         children: [
-          // Utilisation de Builder pour forcer la reconstruction de BudgetInfo
           Builder(
             builder: (BuildContext context) {
               return BudgetInfo(
                 categories: ['food', 'car', 'housing', 'other'],
                 database: DepenseDatabase.instance,
+                valeurUnite: _valeur_en_cour,
+                boolSwitch: _switchValue,
               );
             },
           ),
@@ -58,24 +67,31 @@ class _MenuState extends State<Menu> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
+                // Modification ici : Utilisation de Row et Align
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start, // Aligner les éléments à gauche
                   children: [
+                    Align(
+                      alignment: Alignment.centerLeft, // Aligner le switch à gauche
+                      child: Switch(
+                        value: _switchValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _switchValue = newValue;
+                            _valeur_en_cour = _switchValue ? _valeur_dollar : _valeur_euro;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 5), // Espacement entre le switch et le label
                     Text(
                       "\$",
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
-                    Switch(
-                      value: _switchValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _switchValue = newValue;
-                        });
-                      },
-                    ),
                   ],
                 ),
                 SizedBox(height: 10),
+                // Fin de la modification
                 SizedBox(
                   width: double.infinity,
                   child: _buildCustomButton(
@@ -84,7 +100,10 @@ class _MenuState extends State<Menu> {
                         () async {
                       await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AjouterDepense()),
+                        MaterialPageRoute(builder: (context) => AjouterDepense(
+                          valeurUnite: _valeur_en_cour,
+                          boolSwitch: _switchValue,
+                        )),
                       );
                       _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
                     },
@@ -99,8 +118,11 @@ class _MenuState extends State<Menu> {
                         () async {
                       await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Statistiques(database: DepenseDatabase.instance)),
-                      );
+                        MaterialPageRoute(builder: (context) => Statistiques(
+                            database: DepenseDatabase.instance,
+                            valeurUnite: _valeur_en_cour,
+                            boolSwitch: _switchValue,)
+                      ));
                       _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
                     },
                   ),
@@ -114,7 +136,10 @@ class _MenuState extends State<Menu> {
                         () async {
                       await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ListeDepenses(database: DepenseDatabase.instance)),
+                        MaterialPageRoute(builder: (context) => ListeDepenses(
+                          database: DepenseDatabase.instance,
+                          valeurUnite: _valeur_en_cour,
+                          boolSwitch: _switchValue,)),
                       );
                       _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
                     },

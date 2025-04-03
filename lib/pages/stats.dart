@@ -5,8 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
 
 class Statistiques extends StatefulWidget {
-  const Statistiques({super.key, required this.database}); // Acceptez l'instance de la base de données
+  const Statistiques({super.key, required this.database, required this.valeurUnite, required this.boolSwitch}); // Acceptez l'instance de la base de données
   final DepenseDatabase database;
+  final double valeurUnite;
+  final bool boolSwitch;
 
   @override
   State<StatefulWidget> createState() => PieChartSample3State();
@@ -56,7 +58,12 @@ class PieChartSample3State extends State<Statistiques> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "titleStats", parentContext: context,),
+      appBar: CustomAppBar(
+        title: "titleStats",
+        parentContext: context,
+        valeurUnite: widget.valeurUnite,
+        boolSwitch: widget.boolSwitch
+      ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: depensesParCategorie,
         builder: (context, snapshot) {

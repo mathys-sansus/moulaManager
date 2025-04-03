@@ -6,8 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class BudgetInfo extends StatefulWidget {
   final DepenseDatabase database;
   final List<String> categories;
+  final double valeurUnite;
+  final bool boolSwitch;
 
-  const BudgetInfo({super.key, required this.database, required this.categories});
+  const BudgetInfo({super.key, required this.database, required this.categories, required this.valeurUnite, required this.boolSwitch});
 
   @override
   State<BudgetInfo> createState() => _BudgetInfoState();
@@ -96,7 +98,7 @@ class _BudgetInfoState extends State<BudgetInfo> {
           fit: BoxFit.cover,
         ),
         title: Text(
-          '${AppLocalizations.of(context)!.lookup(category)} : ${value.toStringAsFixed(2)}€',
+          '${AppLocalizations.of(context)!.lookup(category)} : ${(value * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         subtitle: Text('Max : ${max.toStringAsFixed(2)}€',

@@ -7,7 +7,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
 
 class AjouterDepense extends StatefulWidget {
-  const AjouterDepense({super.key});
+  const AjouterDepense({super.key, required this.valeurUnite, required this.boolSwitch});
+  final double valeurUnite;
+  final bool boolSwitch;
 
   @override
   State<AjouterDepense> createState() => _AjouterDepenseState();
@@ -59,7 +61,11 @@ class _AjouterDepenseState extends State<AjouterDepense> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: "addExpense", parentContext: context,),
+      appBar: CustomAppBar(
+        title: "addExpense",
+        parentContext: context,
+        valeurUnite: widget.valeurUnite,
+        boolSwitch: widget.boolSwitch),
       body: Column(
         children: [
           ZoneSaisieAjoutRadioButton(

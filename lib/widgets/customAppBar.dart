@@ -9,8 +9,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final BuildContext parentContext;
   final String title;// Ajout du contexte parent
+  final double valeurUnite;
+  final bool boolSwitch;
 
-  const CustomAppBar({super.key, required this.parentContext, required this.title});
+  const CustomAppBar({super.key, required this.parentContext, required this.title, required this.valeurUnite, required this.boolSwitch});
 
   String _getTranslatedTitle(BuildContext context) {
     switch (title) {
@@ -28,12 +30,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(_getTranslatedTitle(context)),
-      backgroundColor: Colors.blue,
+      title: Text(_getTranslatedTitle(context), style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.deepPurple,
 
       // 🔙 Bouton retour à gauche
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: Icon(Icons.arrow_back, color: Colors.white,),
         onPressed: () {
           if (Navigator.canPop(parentContext)) {
             Navigator.pop(parentContext); // 🔙 Retour à la page précédente
@@ -45,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
       actions: [
         // 🏠 Bouton Accueil
         IconButton(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home, color: Colors.white),
           onPressed: () {
             // Rediriger vers la page d'accueil
             Navigator.push(
@@ -56,22 +58,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
 
         // 🍔 Menu Hamburger sous forme de PopupMenuButton
         PopupMenuButton<String>(
-          icon: Icon(Icons.menu), // Icône hamburger
+          icon: Icon(Icons.menu, color: Colors.white), // Icône hamburger
           onSelected: (value) {
             if (value == "addExpense") {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AjouterDepense()),
+                MaterialPageRoute(builder: (context) => AjouterDepense(
+                    valeurUnite: valeurUnite,
+                    boolSwitch: boolSwitch
+                )),
               );
             } else if (value == "titleStats") {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Statistiques(database: DepenseDatabase.instance)),
+                MaterialPageRoute(builder: (context) => Statistiques(
+                    database: DepenseDatabase.instance,
+                    valeurUnite: valeurUnite,
+                    boolSwitch: boolSwitch)),
               );
             } else if (value == "titleListExpenses") {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ListeDepenses(database: DepenseDatabase.instance)),
+                MaterialPageRoute(builder: (context) => ListeDepenses(
+                  database: DepenseDatabase.instance,
+                  valeurUnite: valeurUnite,
+                  boolSwitch: boolSwitch)),
               );
             }
           },

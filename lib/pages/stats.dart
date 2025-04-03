@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:moula_manager/database/depense_database.dart'; // Importez votre base de données
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/widgets/customAppBar.dart';
 
 class Statistiques extends StatefulWidget {
   const Statistiques({super.key, required this.database}); // Acceptez l'instance de la base de données
@@ -55,7 +56,7 @@ class PieChartSample3State extends State<Statistiques> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.titleStats)),
+      appBar: CustomAppBar(title: "titleStats", parentContext: context,),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: depensesParCategorie,
         builder: (context, snapshot) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moula_manager/database/depense_database.dart';
 import 'package:moula_manager/model/depense.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/widgets/customAppBar.dart';
 
 class ListeDepenses extends StatefulWidget {
   const ListeDepenses({Key? key, required this.database}) : super(key: key);
@@ -183,9 +184,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.titleListExpenses),
-      ),
+      appBar: CustomAppBar(title: "titleListExpenses", parentContext: context,),
       body: OrientationBuilder(
         builder: (context, orientation) {
           return orientation == Orientation.portrait

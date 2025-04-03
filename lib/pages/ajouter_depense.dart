@@ -4,6 +4,7 @@ import 'package:moula_manager/widgets/zone_saisie_ajout_radio_button.dart';
 import 'package:moula_manager/model/depense.dart';
 import 'package:moula_manager/database/depense_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/widgets/customAppBar.dart';
 
 class AjouterDepense extends StatefulWidget {
   const AjouterDepense({super.key});
@@ -58,7 +59,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.addExpense)),
+      appBar: CustomAppBar(title: "addExpense", parentContext: context,),
       body: Column(
         children: [
           ZoneSaisieAjoutRadioButton(

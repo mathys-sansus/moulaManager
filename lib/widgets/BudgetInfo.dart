@@ -3,48 +3,83 @@ import '../database/depense_database.dart';
 import '../model/depense.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BudgetInfo extends StatelessWidget {
+class BudgetInfo extends StatefulWidget {
   final DepenseDatabase database;
-  final List<String> categories; // Ajout du paramètre pour les catégories
+  final List<String> categories;
 
   const BudgetInfo({super.key, required this.database, required this.categories});
 
   @override
+  State<BudgetInfo> createState() => _BudgetInfoState();
+}
+
+class _BudgetInfoState extends State<BudgetInfo> {
+  List<Depense> _depenses = [];
+  bool _isLoading = true;
+  String _errorMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDepenses();
+  }
+
+  @override
+  void didUpdateWidget(covariant BudgetInfo oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Vérifie si les catégories ont changé
+    if (oldWidget.categories != widget.categories) {
+      _loadDepenses();
+    }
+  }
+
+  Future<void> _loadDepenses() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = "";
+    });
+    try {
+      final depenses = await widget.database.getAllDepenses();
+      setState(() {
+        _depenses = depenses;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = "Erreur: $e";
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Depense>>(
-      stream: database.depensesStream,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text("Erreur: ${snapshot.error}");
-        } else if (snapshot.hasData) {
-          final depenses = snapshot.data!;
-          Map<String, double> totals = {for (var cat in categories) cat: 0};
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (_errorMessage.isNotEmpty) {
+      return Center(child: Text(_errorMessage));
+    } else {
+      Map<String, double> totals = {for (var cat in widget.categories) cat: 0};
 
-          for (var depense in depenses) {
-            if (totals.containsKey(depense.type.toLowerCase())) {
-              totals[depense.type.toLowerCase()] = (totals[depense.type.toLowerCase()] ?? 0) + depense.montant;
-            }
-          }
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: categories.map((category) {
-              return _buildBudgetCard(
-                context,
-                category,
-                totals[category] ?? 0,
-                _getMaxBudget(category),
-                _getColor(category),
-              );
-            }).toList(),
-          );
-        } else {
-          return Text(AppLocalizations.of(context)!.noExpense);
+      for (var depense in _depenses) {
+        if (totals.containsKey(depense.type.toLowerCase())) {
+          totals[depense.type.toLowerCase()] = (totals[depense.type.toLowerCase()] ?? 0) + depense.montant;
         }
-      },
-    );
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.categories.map((category) {
+          return _buildBudgetCard(
+            context,
+            category,
+            totals[category] ?? 0,
+            _getMaxBudget(category),
+            _getColor(category),
+          );
+        }).toList(),
+      );
+    }
   }
 
   Widget _buildBudgetCard(
@@ -95,7 +130,7 @@ class BudgetInfo extends StatelessWidget {
       case 'food': return 250;
       case 'car': return 180;
       case 'housing': return 50;
-      case 'other': return 300; // Valeur max pour 'other'
+      case 'other': return 300;
       default: return 0;
     }
   }
@@ -105,7 +140,7 @@ class BudgetInfo extends StatelessWidget {
       case 'food': return Colors.orange;
       case 'car': return Colors.blue;
       case 'housing': return Colors.green;
-      case 'other': return Colors.red; // Couleur pour 'other'
+      case 'other': return Colors.red;
       default: return Colors.grey;
     }
   }

@@ -32,9 +32,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Other) {
-                  widget.typeController.text = _type!.name;
-                }
+                widget.typeController.text = _type!.name;
               });
             },
           ),
@@ -47,9 +45,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Other) {
-                  widget.typeController.text = _type!.name;
-                }
+                widget.typeController.text = _type!.name;
               });
             },
           ),
@@ -62,9 +58,7 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             onChanged: (TypeDepense? value) {
               setState(() {
                 _type = value;
-                if (_type != TypeDepense.Other) {
-                  widget.typeController.text = _type!.name;
-                }
+                widget.typeController.text = _type!.name;
               });
             },
           ),
@@ -76,29 +70,12 @@ class _ZoneSaisieAjoutRadioButtonState extends State<ZoneSaisieAjoutRadioButton>
             groupValue: _type,
             onChanged: (TypeDepense? value) {
               setState(() {
-                widget.typeController.text = "";
                 _type = value;
+                widget.typeController.text = _type!.name;
               });
             },
           ),
         ),
-        if (_type == TypeDepense.Other) Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const SizedBox(height: 16),
-              TextField(
-                controller: widget.typeController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  labelText: 'Type',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ],
-          ),
-        )
       ],
     );
   }

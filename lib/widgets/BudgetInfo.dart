@@ -114,10 +114,10 @@ class BudgetInfo extends StatelessWidget {
 extension on AppLocalizations {
   lookup(String category) {
     switch (category) {
-      case 'food': return 'Alimentation';
-      case 'car': return 'Automobile';
-      case 'housing': return 'Logement';
-      case 'other': return 'Autre';
+      case 'food': return food;
+      case 'car': return car;
+      case 'housing': return housing;
+      case 'other': return other;
       default: return '';
     }
   }

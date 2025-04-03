@@ -4,6 +4,7 @@ import 'package:moula_manager/pages/ajouter_depense.dart';
 import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/widgets/customAppBar.dart';
 
 import '../database/depense_database.dart';
 
@@ -16,24 +17,13 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  bool _switchInfo = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false, //Empêche le clavier de pousser les widgets vers le haut. Le clavier passera par-dessus les widgets
-      appBar: AppBar(
-        title: const Text('moulaManager'),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: "moulaManager"),
       body: Column(
-        children: [BudgetInfo(categories: ['food', 'car', 'housing'], database: DepenseDatabase.instance),
-          Switch(value: _switchInfo, onChanged: (bool value){
-            setState(() {
-              _switchInfo=value;
-            });
-          }),
-          if (_switchInfo) BudgetInfo(database: DepenseDatabase.instance, categories: ['other']),
+        children: [BudgetInfo(categories: ['food', 'car', 'housing', 'other'], database: DepenseDatabase.instance),
           ElevatedButton(
               onPressed: (){
                 Navigator.push(

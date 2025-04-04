@@ -47,91 +47,102 @@ class _MenuState extends State<Menu> {
                 child: Column(
                   children: [
                     BudgetInfo(
-                      categories: ['food', 'car', 'housing', 'other'],
-                      database: DepenseDatabase.instance
+                        categories: ['food', 'car', 'housing', 'other'],
+                        database: DepenseDatabase.instance
                     ),
                     SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Switch(
-                          value: boolSwitch,
-                          onChanged: _toggleCurrency,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          boolSwitch ? "\$" : "€",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
             ),
 
             // Partie basse (fixe en bas)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                children: [
-                  CustomButton(
-                    label: AppLocalizations.of(context)!.buttonAddExpense,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AjouterDepense()),
-                      );
-                      _refreshBudgetInfo();
-                    },
+            Column(
+              children: [
+                // Le Switch fixé en bas
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Switch(
+                        value: boolSwitch,
+                        onChanged: _toggleCurrency,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        boolSwitch ? "\$" : "€",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  CustomButton(
-                    label: AppLocalizations.of(context)!.buttonStats,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Statistiques(
-                            database: DepenseDatabase.instance,
-                          ),
-                        ),
-                      );
-                      _refreshBudgetInfo();
-                    },
+                ),
+                SizedBox(height: 10),
+
+                // Les boutons sous le Switch
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    children: [
+                      CustomButton(
+                        label: AppLocalizations.of(context)!.buttonAddExpense,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AjouterDepense()),
+                          );
+                          _refreshBudgetInfo();
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      CustomButton(
+                        label: AppLocalizations.of(context)!.buttonStats,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Statistiques(
+                                database: DepenseDatabase.instance,
+                              ),
+                            ),
+                          );
+                          _refreshBudgetInfo();
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      CustomButton(
+                        label: AppLocalizations.of(context)!.buttonShowExpenses,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ListeDepenses(
+                                database: DepenseDatabase.instance,
+                              ),
+                            ),
+                          );
+                          _refreshBudgetInfo();
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      CustomButton(
+                        label: AppLocalizations.of(context)!.setLimits,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ModifierMax(
+                                database: DepenseDatabase.instance,
+                              ),
+                            ),
+                          );
+                          _refreshBudgetInfo();
+                        },
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  CustomButton(
-                    label: AppLocalizations.of(context)!.buttonShowExpenses,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListeDepenses(
-                            database: DepenseDatabase.instance,
-                          ),
-                        ),
-                      );
-                      _refreshBudgetInfo();
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  CustomButton(
-                    label: AppLocalizations.of(context)!.setLimits,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ModifierMax(
-                            database: DepenseDatabase.instance,
-                          ),
-                        ),
-                      );
-                      _refreshBudgetInfo();
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

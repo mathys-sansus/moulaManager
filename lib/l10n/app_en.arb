@@ -1,6 +1,4 @@
 {
- "helloWorld": "Hello World!",
- "appTitle" : "The App Title",
  "addExpense" : "Add an expense",
  "food" : "Food",
  "car" : "Car",

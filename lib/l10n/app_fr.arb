@@ -1,6 +1,4 @@
 {
- "helloWorld": "Bonjour le monde !",
- "appTitle" : "Titre de l’application",
  "addExpense" : "Ajouter une dépense",
  "food" : "Alimentation",
  "car" : "Automobile",

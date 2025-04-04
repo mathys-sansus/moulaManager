@@ -34,6 +34,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
     if (montant == null) {
       return;
     }
+    montant = montant / (boolSwitch ? valeur_dollar : 1);
 
     final depense = Depense(
       type: _typeController.text,

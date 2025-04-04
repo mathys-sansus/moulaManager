@@ -109,17 +109,19 @@ class PieChartSample3State extends State<Statistiques> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildLegendItem(Colors.orangeAccent, AppLocalizations.of(context)!.food),
-                      const SizedBox(width: 10),
-                      _buildLegendItem(Colors.blue, AppLocalizations.of(context)!.car),
-                      const SizedBox(width: 10),
-                      _buildLegendItem(Colors.green, AppLocalizations.of(context)!.housing),
-                      const SizedBox(width: 10),
-                      _buildLegendItem(Colors.red, AppLocalizations.of(context)!.other),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),  // Ajouter une marge à gauche
+                    child: Wrap(
+                      alignment: WrapAlignment.start,  // Aligner les éléments à gauche
+                      spacing: 10.0,
+                      runSpacing: 5.0,
+                      children: [
+                        _buildLegendItem(Colors.orangeAccent, AppLocalizations.of(context)!.food),
+                        _buildLegendItem(Colors.blue, AppLocalizations.of(context)!.car),
+                        _buildLegendItem(Colors.green, AppLocalizations.of(context)!.housing),
+                        _buildLegendItem(Colors.red, AppLocalizations.of(context)!.other),
+                      ],
+                    ),
                   ),
                 ],
               );

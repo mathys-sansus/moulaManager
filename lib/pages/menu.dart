@@ -5,6 +5,7 @@ import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
+import 'package:moula_manager/widgets/custom_button.dart'; // Import du bouton
 
 import '../database/depense_database.dart';
 
@@ -19,11 +20,9 @@ class _MenuState extends State<Menu> {
   bool _switchValue = false;
   double _valeur_dollar = 1.11;
   double _valeur_euro = 1.00;
-  double _valeur_en_cour = 1.00; // Par défaut en euros
+  double _valeur_en_cour = 1.00;
 
-  // Méthode pour recharger les données de BudgetInfo
   void _refreshBudgetInfo() {
-    // Force la reconstruction de BudgetInfo en appelant setState
     setState(() {});
   }
 
@@ -32,10 +31,10 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        title: "moulaManager",
-        parentContext: context,
-        valeurUnite: _valeur_en_cour,
-        boolSwitch: _switchValue
+          title: "moulaManager",
+          parentContext: context,
+          valeurUnite: _valeur_en_cour,
+          boolSwitch: _switchValue
       ),
       body: Column(
         children: [
@@ -54,12 +53,11 @@ class _MenuState extends State<Menu> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
-                // Modification ici : Utilisation de Row et Align
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // Aligner les éléments à gauche
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft, // Aligner le switch à gauche
+                      alignment: Alignment.centerLeft,
                       child: Switch(
                         value: _switchValue,
                         onChanged: (newValue) {
@@ -70,7 +68,7 @@ class _MenuState extends State<Menu> {
                         },
                       ),
                     ),
-                    SizedBox(width: 5), // Espacement entre le switch et le label
+                    SizedBox(width: 5),
                     Text(
                       "\$",
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -78,82 +76,58 @@ class _MenuState extends State<Menu> {
                   ],
                 ),
                 SizedBox(height: 10),
-                // Fin de la modification
-                SizedBox(
-                  width: double.infinity,
-                  child: _buildCustomButton(
-                    context,
-                    AppLocalizations.of(context)!.buttonAddExpense,
-                        () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AjouterDepense(
-                          valeurUnite: _valeur_en_cour,
-                          boolSwitch: _switchValue,
-                        )),
-                      );
-                      _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
-                    },
-                  ),
+
+                // ✅ Boutons remplacés par CustomButton
+                CustomButton(
+                  label: AppLocalizations.of(context)!.buttonAddExpense,
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AjouterDepense(
+                        valeurUnite: _valeur_en_cour,
+                        boolSwitch: _switchValue,
+                      )),
+                    );
+                    _refreshBudgetInfo();
+                  },
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  width: double.infinity,
-                  child: _buildCustomButton(
-                    context,
-                    AppLocalizations.of(context)!.buttonStats,
-                        () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Statistiques(
-                            database: DepenseDatabase.instance,
-                            valeurUnite: _valeur_en_cour,
-                            boolSwitch: _switchValue,)
-                      ));
-                      _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
-                    },
-                  ),
+
+                CustomButton(
+                  label: AppLocalizations.of(context)!.buttonStats,
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Statistiques(
+                        database: DepenseDatabase.instance,
+                        valeurUnite: _valeur_en_cour,
+                        boolSwitch: _switchValue,
+                      )),
+                    );
+                    _refreshBudgetInfo();
+                  },
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  width: double.infinity,
-                  child: _buildCustomButton(
-                    context,
-                    AppLocalizations.of(context)!.buttonShowExpenses,
-                        () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ListeDepenses(
-                          database: DepenseDatabase.instance,
-                          valeurUnite: _valeur_en_cour,
-                          boolSwitch: _switchValue,)),
-                      );
-                      _refreshBudgetInfo(); // Rafraîchir BudgetInfo après le retour
-                    },
-                  ),
+
+                CustomButton(
+                  label: AppLocalizations.of(context)!.buttonShowExpenses,
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListeDepenses(
+                        database: DepenseDatabase.instance,
+                        valeurUnite: _valeur_en_cour,
+                        boolSwitch: _switchValue,
+                      )),
+                    );
+                    _refreshBudgetInfo();
+                  },
                 ),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.deepPurple,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        elevation: 5,
-        textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-      ),
-      child: Text(label),
     );
   }
 }

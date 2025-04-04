@@ -99,10 +99,10 @@ class _BudgetInfoState extends State<BudgetInfo> {
         ),
         title: Text(
           '${AppLocalizations.of(context)!.lookup(category)} : ${(value * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
         subtitle: Text('${AppLocalizations.of(context)!.lookup(category)} : ${(max * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
-            style: TextStyle(fontSize: 16, color: Colors.grey[700])),
+            style: TextStyle(fontSize: 14, color: Colors.grey[700])),
         trailing: _buildProgressIndicator(value, max, color),
       ),
     );

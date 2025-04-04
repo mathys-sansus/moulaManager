@@ -5,6 +5,7 @@ import 'package:moula_manager/model/depense.dart';
 import 'package:moula_manager/database/depense_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
+import 'package:moula_manager/widgets/custom_button.dart';
 
 class AjouterDepense extends StatefulWidget {
   const AjouterDepense({super.key, required this.valeurUnite, required this.boolSwitch});
@@ -62,31 +63,31 @@ class _AjouterDepenseState extends State<AjouterDepense> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        title: "addExpense",
-        parentContext: context,
-        valeurUnite: widget.valeurUnite,
-        boolSwitch: widget.boolSwitch),
-      body: Column(
-        children: [
-          ZoneSaisieAjoutRadioButton(
-            typeController: _typeController,
-          ),
-          ZoneSaisieAjout(
-            montantController: _montantController,
-            descriptionController: _descriptionController,
-            switchValue: widget.boolSwitch,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              FocusScope.of(context).unfocus();
-              _addDepense();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.confirm,
-              style: TextStyle(fontSize: 30.0),
+          title: "addExpense",
+          parentContext: context,
+          valeurUnite: widget.valeurUnite,
+          boolSwitch: widget.boolSwitch),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        child: Column(
+          children: [
+            ZoneSaisieAjoutRadioButton(
+              typeController: _typeController,
             ),
-          )
-        ],
+            ZoneSaisieAjout(
+              montantController: _montantController,
+              descriptionController: _descriptionController,
+              switchValue: widget.boolSwitch,
+            ),
+            CustomButton(
+                label: AppLocalizations.of(context)!.confirm,
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  _addDepense();
+                }
+            ),
+          ],
+        ),
       ),
     );
   }

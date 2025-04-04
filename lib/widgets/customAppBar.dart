@@ -30,35 +30,37 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false, // empêche Flutter de mettre une flèche par défaut
       title: Text(_getTranslatedTitle(context), style: TextStyle(color: Colors.white)),
       backgroundColor: Colors.deepPurple,
-
-      // 🔙 Bouton retour à gauche
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.white,),
+      leading: title == "moulaManager"
+          ? null
+          : IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () {
           if (Navigator.canPop(parentContext)) {
-            Navigator.pop(parentContext); // 🔙 Retour à la page précédente
+            Navigator.pop(parentContext);
           }
         },
       ),
 
-      // 📌 Actions à droite
+
+    // 📌 Actions à droite
       actions: [
         // 🏠 Bouton Accueil
         IconButton(
-          icon: Icon(Icons.home, color: Colors.white),
+          icon: const Icon(Icons.home, color: Colors.white),
           onPressed: () {
             // Rediriger vers la page d'accueil
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Menu())
+                context, MaterialPageRoute(builder: (context) => const Menu())
             );
           },
         ),
 
         // 🍔 Menu Hamburger sous forme de PopupMenuButton
         PopupMenuButton<String>(
-          icon: Icon(Icons.menu, color: Colors.white), // Icône hamburger
+          icon: const Icon(Icons.menu, color: Colors.white), // Icône hamburger
           onSelected: (value) {
             if (value == "addExpense") {
               Navigator.push(
@@ -80,9 +82,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ListeDepenses(
-                  database: DepenseDatabase.instance,
-                  valeurUnite: valeurUnite,
-                  boolSwitch: boolSwitch)),
+                    database: DepenseDatabase.instance,
+                    valeurUnite: valeurUnite,
+                    boolSwitch: boolSwitch)),
               );
             }
           },

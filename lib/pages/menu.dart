@@ -37,19 +37,6 @@ class _MenuState extends State<Menu> {
         valeurUnite: _valeur_en_cour,
         boolSwitch: _switchValue
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(child: Text('Menu')),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Action pour Item 1
-              },
-            ),
-          ],
-        ),
-      ),
       body: Column(
         children: [
           Builder(

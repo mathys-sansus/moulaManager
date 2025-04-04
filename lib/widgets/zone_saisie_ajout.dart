@@ -4,11 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ZoneSaisieAjout extends StatelessWidget {
   final TextEditingController montantController;
   final TextEditingController descriptionController;
+  final bool switchValue;
 
   const ZoneSaisieAjout({
     super.key,
     required this.montantController,
     required this.descriptionController,
+    required this.switchValue
   });
 
   @override
@@ -22,8 +24,10 @@ class ZoneSaisieAjout extends StatelessWidget {
               controller: montantController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.amountField,
-                border: OutlineInputBorder(),
+                labelText: switchValue
+                    ? AppLocalizations.of(context)!.amountFieldDollar
+                    : AppLocalizations.of(context)!.amountFieldEuro,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),

@@ -79,7 +79,10 @@ class _ListeDepensesState extends State<ListeDepenses> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text('${depense.type} - ${depense.montant.toStringAsFixed(2)}€'),
+            title: Text(
+              '${depense.type} - ${(depense.montant * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
+              style: const TextStyle(fontSize: 16),
+            ),
             subtitle: Text(depense.description ?? ''),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
@@ -137,7 +140,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
                         crossAxisAlignment: CrossAxisAlignment.start,  // Alignement du texte à gauche
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${depense.type} - ${depense.montant.toStringAsFixed(2)}€', style: const TextStyle(fontSize: 16)),
+                          Text('${depense.type} - ${(depense.montant * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}', style: const TextStyle(fontSize: 16)),
                           Text(depense.description ?? '', style: const TextStyle(fontSize: 12)),
                         ],
                       ),
@@ -199,5 +202,17 @@ class _ListeDepensesState extends State<ListeDepenses> {
         },
       ),
     );
+  }
+}
+
+extension on AppLocalizations {
+  lookup(String category) {
+    switch (category) {
+      case 'food': return food;
+      case 'car': return car;
+      case 'housing': return housing;
+      case 'other': return other;
+      default: return '';
+    }
   }
 }

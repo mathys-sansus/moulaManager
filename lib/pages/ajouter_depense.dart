@@ -74,6 +74,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
           ZoneSaisieAjout(
             montantController: _montantController,
             descriptionController: _descriptionController,
+            switchValue: widget.boolSwitch,
           ),
           ElevatedButton(
             onPressed: () {

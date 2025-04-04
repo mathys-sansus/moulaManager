@@ -18,5 +18,10 @@
  "errorLoadingExpenses" : "Error loading expenses",
  "errorDeletingExpense" : "Error deleting expense",
  "errorAddingExpense" : "Error adding expense",
- "addExpenseSuccess" : "Expense added successfully"
+ "addExpenseSuccess" : "Expense added successfully",
+ "setLimits" : "Set the limits",
+ "messageEnterValue" : "Please enter a value",
+ "messageEnterValidValue" : "Please enter a valid value",
+ "requiredField" : "This field is required",
+ "valuesUpdated" : "Values updated successfully"
 }

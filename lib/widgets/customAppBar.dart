@@ -5,6 +5,7 @@ import 'package:moula_manager/pages/menu.dart';
 import 'package:moula_manager/pages/stats.dart';
 import '../database/depense_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/pages/modifier_max.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final BuildContext parentContext;
@@ -20,6 +21,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
         return AppLocalizations.of(context)!.titleStats;
       case "titleListExpenses":
         return AppLocalizations.of(context)!.titleListExpenses;
+      case "setLimits":
+        return AppLocalizations.of(context)!.setLimits;
       default:
         return title; // Fallback si la clé n'existe pas
     }
@@ -78,6 +81,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                 MaterialPageRoute(builder: (context) => ListeDepenses(
                     database: DepenseDatabase.instance
               )));
+            } else if (value == "setLimits") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ModifierMax(
+                      database: DepenseDatabase.instance
+                  )));
             }
           },
           itemBuilder: (BuildContext context) => [
@@ -92,6 +101,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
             PopupMenuItem(
               value: "titleListExpenses",
               child: Text(AppLocalizations.of(context)!.titleListExpenses),
+            ),
+            PopupMenuItem(
+              value: "setLimits",
+              child: Text(AppLocalizations.of(context)!.setLimits),
             ),
           ],
         ),

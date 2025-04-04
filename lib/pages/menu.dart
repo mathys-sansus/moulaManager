@@ -8,6 +8,7 @@ import 'package:moula_manager/widgets/customAppBar.dart';
 import 'package:moula_manager/widgets/custom_button.dart';
 import 'package:moula_manager/variables/globals.dart';
 import '../database/depense_database.dart';
+import 'package:moula_manager/pages/modifier_max.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -17,10 +18,15 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
-
   void _refreshBudgetInfo() {
     setState(() {});
+  }
+
+  void _toggleCurrency(bool newValue) {
+    setState(() {
+      boolSwitch = newValue;
+      valeur_en_cour = boolSwitch ? valeur_dollar : valeur_euro;
+    });
   }
 
   @override
@@ -28,92 +34,107 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-          title: "moulaManager",
-          parentContext: context
+        title: "moulaManager",
+        parentContext: context,
       ),
-      body: Column(
-        children: [
-          Builder(
-            builder: (BuildContext context) {
-              return BudgetInfo(
-                categories: ['food', 'car', 'housing', 'other'],
-                database: DepenseDatabase.instance,
-                valeurUnite: valeur_en_cour,
-                boolSwitch: boolSwitch,
-              );
-            },
-          ),
-          Expanded(child: Container()),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Partie haute scrollable si besoin
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Switch(
-                        value: boolSwitch,
-                        onChanged: (newValue) {
-                          setState(() {
-                            boolSwitch = newValue;
-                            valeur_en_cour = boolSwitch ? valeur_dollar : valeur_euro;
-                          });
-                        },
-                      ),
+                    BudgetInfo(
+                      categories: ['food', 'car', 'housing', 'other'],
+                      database: DepenseDatabase.instance
                     ),
-                    SizedBox(width: 5),
-                    Text(
-                      "\$",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Switch(
+                          value: boolSwitch,
+                          onChanged: _toggleCurrency,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          boolSwitch ? "\$" : "€",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-
-                // ✅ Boutons remplacés par CustomButton
-                CustomButton(
-                  label: AppLocalizations.of(context)!.buttonAddExpense,
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AjouterDepense()),
-                    );
-                    _refreshBudgetInfo();
-                  },
-                ),
-                SizedBox(height: 10),
-
-                CustomButton(
-                  label: AppLocalizations.of(context)!.buttonStats,
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Statistiques(
-                        database: DepenseDatabase.instance)),
-                    );
-                    _refreshBudgetInfo();
-                  },
-                ),
-                SizedBox(height: 10),
-
-                CustomButton(
-                  label: AppLocalizations.of(context)!.buttonShowExpenses,
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ListeDepenses(
-                        database: DepenseDatabase.instance
-                      )),
-                    );
-                    _refreshBudgetInfo();
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+
+            // Partie basse (fixe en bas)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Column(
+                children: [
+                  CustomButton(
+                    label: AppLocalizations.of(context)!.buttonAddExpense,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AjouterDepense()),
+                      );
+                      _refreshBudgetInfo();
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  CustomButton(
+                    label: AppLocalizations.of(context)!.buttonStats,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Statistiques(
+                            database: DepenseDatabase.instance,
+                          ),
+                        ),
+                      );
+                      _refreshBudgetInfo();
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  CustomButton(
+                    label: AppLocalizations.of(context)!.buttonShowExpenses,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListeDepenses(
+                            database: DepenseDatabase.instance,
+                          ),
+                        ),
+                      );
+                      _refreshBudgetInfo();
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  CustomButton(
+                    label: AppLocalizations.of(context)!.setLimits,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ModifierMax(
+                            database: DepenseDatabase.instance,
+                          ),
+                        ),
+                      );
+                      _refreshBudgetInfo();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import '../database/depense_database.dart';
 import '../model/depense.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:moula_manager/variables/globals.dart';
 
 class BudgetInfo extends StatefulWidget {
   final DepenseDatabase database;
   final List<String> categories;
-  final double valeurUnite;
-  final bool boolSwitch;
 
-  const BudgetInfo({super.key, required this.database, required this.categories, required this.valeurUnite, required this.boolSwitch});
+  const BudgetInfo({super.key, required this.database, required this.categories});
 
   @override
   State<BudgetInfo> createState() => _BudgetInfoState();
@@ -20,10 +19,29 @@ class _BudgetInfoState extends State<BudgetInfo> {
   bool _isLoading = true;
   String _errorMessage = "";
 
+  double _foodMax = 0;
+  double _carMax = 0;
+  double _housingMax = 0;
+  double _otherMax = 0;
+
   @override
   void initState() {
     super.initState();
     _loadDepenses();
+    _loadMaxValues();
+  }
+
+  // Charger les valeurs max depuis la base de données
+  Future<void> _loadMaxValues() async {
+    final maxValues = await widget.database.getMax();
+    final multiplicateur = boolSwitch ? valeur_dollar : 1;
+
+    setState(() {
+      _foodMax = (maxValues[0] * multiplicateur);   // food
+      _carMax = (maxValues[1] * multiplicateur);   // car
+      _housingMax = (maxValues[2] * multiplicateur); // housing
+      _otherMax = (maxValues[3] * multiplicateur);  // other
+    });
   }
 
   @override
@@ -32,6 +50,7 @@ class _BudgetInfoState extends State<BudgetInfo> {
     // Vérifie si les catégories ont changé
     if (oldWidget.categories != widget.categories) {
       _loadDepenses();
+      _loadMaxValues();
     }
   }
 
@@ -49,7 +68,7 @@ class _BudgetInfoState extends State<BudgetInfo> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = "Erreur: $e";
+        _errorMessage = "Error: $e";
       });
     }
   }
@@ -98,10 +117,10 @@ class _BudgetInfoState extends State<BudgetInfo> {
           fit: BoxFit.cover,
         ),
         title: Text(
-          '${AppLocalizations.of(context)!.lookup(category)} : ${(value * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
+          '${AppLocalizations.of(context)!.lookup(category)} : ${(value * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}',
           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
-        subtitle: Text('${AppLocalizations.of(context)!.lookup(category)} : ${(max * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
+        subtitle: Text('${AppLocalizations.of(context)!.lookup(category)} : ${(max).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}',
             style: TextStyle(fontSize: 14, color: Colors.grey[700])),
         trailing: _buildProgressIndicator(value, max, color),
       ),
@@ -129,10 +148,10 @@ class _BudgetInfoState extends State<BudgetInfo> {
 
   double _getMaxBudget(String category) {
     switch (category) {
-      case 'food': return 250;
-      case 'car': return 180;
-      case 'housing': return 50;
-      case 'other': return 300;
+      case 'food': return _foodMax;
+      case 'car': return _carMax;
+      case 'housing': return _housingMax;
+      case 'other': return _otherMax;
       default: return 0;
     }
   }

@@ -18,5 +18,10 @@
  "errorLoadingExpenses" : "Erreur lors du chargement des dépenses",
  "errorDeletingExpense" : "Erreur lors de la suppression",
  "errorAddingExpense" : "Erreur lors de l'ajout",
- "addExpenseSuccess" : "Dépense ajoutée avec succès"
+ "addExpenseSuccess" : "Dépense ajoutée avec succès",
+ "setLimits" : "Définir les limites",
+ "messageEnterValue" : "Entrez une valeur",
+ "messageEnterValidValue" : "Entrez un nombre valide",
+ "requiredField" : "Champs requis",
+ "valuesUpdated" : "Valeurs mises à jour avec succès"
 }

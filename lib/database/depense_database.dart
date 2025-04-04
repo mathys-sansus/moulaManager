@@ -41,13 +41,82 @@ class DepenseDatabase {
 
   Future<void> _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE depenses (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        type TEXT NOT NULL,
-        montant REAL NOT NULL,
-        description TEXT NOT NULL
+    CREATE TABLE depenses (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      type TEXT NOT NULL,
+      montant REAL NOT NULL,
+      description TEXT NOT NULL
+    );
+  ''');
+
+    await db.execute('''
+    CREATE TABLE maximumDepense (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nom TEXT NOT NULL,
+      maxDepense REAL NOT NULL
+    );
+  ''');
+
+    // Insertion des valeurs de base
+    await db.insert('maximumDepense', {'nom': 'food', 'maxDepense': 200});
+    await db.insert('maximumDepense', {'nom': 'car', 'maxDepense': 200});
+    await db.insert('maximumDepense', {'nom': 'housing', 'maxDepense': 200});
+    await db.insert('maximumDepense', {'nom': 'other', 'maxDepense': 200});
+  }
+
+  Future<void> modifMax(double food, double car, double housing, double other) async {
+    final db = await database;
+
+    await db.update(
+      'maximumDepense',
+      {'maxDepense': food},
+      where: 'nom = ?',
+      whereArgs: ['food'],
+    );
+
+    await db.update(
+      'maximumDepense',
+      {'maxDepense': car},
+      where: 'nom = ?',
+      whereArgs: ['car'],
+    );
+
+    await db.update(
+      'maximumDepense',
+      {'maxDepense': housing},
+      where: 'nom = ?',
+      whereArgs: ['housing'],
+    );
+
+    await db.update(
+      'maximumDepense',
+      {'maxDepense': other},
+      where: 'nom = ?',
+      whereArgs: ['other'],
+    );
+  }
+
+  Future<List<double>> getMax() async {
+    final db = await database;
+
+    final List<String> noms = ['food', 'car', 'housing', 'other'];
+    final List<double> result = [];
+
+    for (String nom in noms) {
+      final List<Map<String, dynamic>> res = await db.query(
+        'maximumDepense',
+        where: 'nom = ?',
+        whereArgs: [nom],
+        limit: 1,
       );
-    ''');
+
+      if (res.isNotEmpty) {
+        result.add(res.first['maxDepense']);
+      } else {
+        result.add(0.0); // Valeur par défaut si l'entrée est absente
+      }
+    }
+    return result;
   }
 
   Future<List<Depense>> _getDepenses() async {
@@ -81,18 +150,6 @@ class DepenseDatabase {
     await db.delete(_tableDepenses);
     _depensesStreamController.add(await _getDepenses()); // Notifie le Stream
   }
-
-  /* Future<void> updateDepense(Depense depense) async {
-    final db = await database;
-    await db.update(
-      _tableDepenses,
-      depense.toMap(),
-      where: 'id = ?',
-      whereArgs: [depense.id],
-    );
-    print("Dépense mise à jour, notification du Stream...");
-    _depensesStreamController.add(await _getDepenses());
-  }  */
 
   void dispose() {
     _depensesStreamController.close();

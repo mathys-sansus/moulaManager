@@ -6,11 +6,10 @@ import 'package:moula_manager/database/depense_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
 import 'package:moula_manager/widgets/custom_button.dart';
+import 'package:moula_manager/variables/globals.dart';
 
 class AjouterDepense extends StatefulWidget {
-  const AjouterDepense({super.key, required this.valeurUnite, required this.boolSwitch});
-  final double valeurUnite;
-  final bool boolSwitch;
+  const AjouterDepense({super.key});
 
   @override
   State<AjouterDepense> createState() => _AjouterDepenseState();
@@ -64,9 +63,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
           title: "addExpense",
-          parentContext: context,
-          valeurUnite: widget.valeurUnite,
-          boolSwitch: widget.boolSwitch),
+          parentContext: context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         child: Column(
@@ -77,7 +74,7 @@ class _AjouterDepenseState extends State<AjouterDepense> {
             ZoneSaisieAjout(
               montantController: _montantController,
               descriptionController: _descriptionController,
-              switchValue: widget.boolSwitch,
+              switchValue: boolSwitch,
             ),
             CustomButton(
                 label: AppLocalizations.of(context)!.confirm,

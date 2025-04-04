@@ -9,10 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final BuildContext parentContext;
   final String title;// Ajout du contexte parent
-  final double valeurUnite;
-  final bool boolSwitch;
 
-  const CustomAppBar({super.key, required this.parentContext, required this.title, required this.valeurUnite, required this.boolSwitch});
+  const CustomAppBar({super.key, required this.parentContext, required this.title});
 
   String _getTranslatedTitle(BuildContext context) {
     switch (title) {
@@ -65,27 +63,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
             if (value == "addExpense") {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AjouterDepense(
-                    valeurUnite: valeurUnite,
-                    boolSwitch: boolSwitch
-                )),
+                MaterialPageRoute(builder: (context) => AjouterDepense()),
               );
             } else if (value == "titleStats") {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Statistiques(
                     database: DepenseDatabase.instance,
-                    valeurUnite: valeurUnite,
-                    boolSwitch: boolSwitch)),
+                )),
               );
             } else if (value == "titleListExpenses") {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ListeDepenses(
-                    database: DepenseDatabase.instance,
-                    valeurUnite: valeurUnite,
-                    boolSwitch: boolSwitch)),
-              );
+                    database: DepenseDatabase.instance
+              )));
             }
           },
           itemBuilder: (BuildContext context) => [

@@ -3,12 +3,11 @@ import 'package:moula_manager/database/depense_database.dart';
 import 'package:moula_manager/model/depense.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
+import 'package:moula_manager/variables/globals.dart';
 
 class ListeDepenses extends StatefulWidget {
-  const ListeDepenses({Key? key, required this.database, required this.valeurUnite, required this.boolSwitch}) : super(key: key);
+  const ListeDepenses({Key? key, required this.database}) : super(key: key);
   final DepenseDatabase database;
-  final double valeurUnite;
-  final bool boolSwitch;
 
   @override
   State<ListeDepenses> createState() => _ListeDepensesState();
@@ -80,7 +79,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
             title: Text(
-              '${depense.type} - ${(depense.montant * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}',
+              '${depense.type} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}',
               style: const TextStyle(fontSize: 16),
             ),
             subtitle: Text(depense.description ?? ''),
@@ -140,7 +139,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
                         crossAxisAlignment: CrossAxisAlignment.start,  // Alignement du texte à gauche
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${depense.type} - ${(depense.montant * widget.valeurUnite).toStringAsFixed(2)} ${widget.boolSwitch ? "\$" : "€"}', style: const TextStyle(fontSize: 16)),
+                          Text('${depense.type} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}', style: const TextStyle(fontSize: 16)),
                           Text(depense.description ?? '', style: const TextStyle(fontSize: 12)),
                         ],
                       ),
@@ -191,9 +190,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "titleListExpenses",
-        parentContext: context,
-        valeurUnite: widget.valeurUnite,
-        boolSwitch: widget.boolSwitch),
+        parentContext: context),
       body: OrientationBuilder(
         builder: (context, orientation) {
           return orientation == Orientation.portrait

@@ -5,8 +5,8 @@ import 'package:moula_manager/pages/listeDepenses.dart';
 import 'package:moula_manager/pages/stats.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:moula_manager/widgets/customAppBar.dart';
-import 'package:moula_manager/widgets/custom_button.dart'; // Import du bouton
-
+import 'package:moula_manager/widgets/custom_button.dart';
+import 'package:moula_manager/variables/globals.dart';
 import '../database/depense_database.dart';
 
 class Menu extends StatefulWidget {
@@ -17,10 +17,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  bool _switchValue = false;
-  double _valeur_dollar = 1.11;
-  double _valeur_euro = 1.00;
-  double _valeur_en_cour = 1.00;
+
 
   void _refreshBudgetInfo() {
     setState(() {});
@@ -32,9 +29,7 @@ class _MenuState extends State<Menu> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
           title: "moulaManager",
-          parentContext: context,
-          valeurUnite: _valeur_en_cour,
-          boolSwitch: _switchValue
+          parentContext: context
       ),
       body: Column(
         children: [
@@ -43,8 +38,8 @@ class _MenuState extends State<Menu> {
               return BudgetInfo(
                 categories: ['food', 'car', 'housing', 'other'],
                 database: DepenseDatabase.instance,
-                valeurUnite: _valeur_en_cour,
-                boolSwitch: _switchValue,
+                valeurUnite: valeur_en_cour,
+                boolSwitch: boolSwitch,
               );
             },
           ),
@@ -59,11 +54,11 @@ class _MenuState extends State<Menu> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Switch(
-                        value: _switchValue,
+                        value: boolSwitch,
                         onChanged: (newValue) {
                           setState(() {
-                            _switchValue = newValue;
-                            _valeur_en_cour = _switchValue ? _valeur_dollar : _valeur_euro;
+                            boolSwitch = newValue;
+                            valeur_en_cour = boolSwitch ? valeur_dollar : valeur_euro;
                           });
                         },
                       ),
@@ -83,10 +78,7 @@ class _MenuState extends State<Menu> {
                   onPressed: () async {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AjouterDepense(
-                        valeurUnite: _valeur_en_cour,
-                        boolSwitch: _switchValue,
-                      )),
+                      MaterialPageRoute(builder: (context) => AjouterDepense()),
                     );
                     _refreshBudgetInfo();
                   },
@@ -99,10 +91,7 @@ class _MenuState extends State<Menu> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Statistiques(
-                        database: DepenseDatabase.instance,
-                        valeurUnite: _valeur_en_cour,
-                        boolSwitch: _switchValue,
-                      )),
+                        database: DepenseDatabase.instance)),
                     );
                     _refreshBudgetInfo();
                   },
@@ -115,9 +104,7 @@ class _MenuState extends State<Menu> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ListeDepenses(
-                        database: DepenseDatabase.instance,
-                        valeurUnite: _valeur_en_cour,
-                        boolSwitch: _switchValue,
+                        database: DepenseDatabase.instance
                       )),
                     );
                     _refreshBudgetInfo();

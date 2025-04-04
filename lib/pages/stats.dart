@@ -7,7 +7,7 @@ import 'package:moula_manager/widgets/customAppBar.dart';
 import '../database/depense_database.dart';
 
 class Statistiques extends StatefulWidget {
-  const Statistiques({super.key, required this.database}); // Acceptez l'instance de la base de données
+  const Statistiques({super.key, required this.database});
   final DepenseDatabase database;
 
   @override
@@ -31,8 +31,7 @@ class PieChartSample3State extends State<Statistiques> {
     double housing = 0;
     double other = 0;
     for (var depense in depenses) {
-      // Utilisez la notation pointée pour accéder aux propriétés de l'objet Depense
-      switch (depense.type) {  // Assurez-vous que 'type' correspond au nom de la propriété dans votre classe Depense
+      switch (depense.type) {
         case 'Car':
           car += depense.montant;
           break;
@@ -66,7 +65,6 @@ class PieChartSample3State extends State<Statistiques> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data!;
-            // Vérifiez si la liste 'data' est vide
             if (data.every((element) => element['montant'] == 0)) {
               return Center(
                 child: Text(
@@ -107,9 +105,9 @@ class PieChartSample3State extends State<Statistiques> {
                   ),
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0),  // Ajouter une marge à gauche
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: Wrap(
-                      alignment: WrapAlignment.start,  // Aligner les éléments à gauche
+                      alignment: WrapAlignment.start,
                       spacing: 10.0,
                       runSpacing: 5.0,
                       children: [

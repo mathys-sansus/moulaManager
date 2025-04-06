@@ -128,7 +128,7 @@ class _BudgetInfoState extends State<BudgetInfo> {
   }
 
   Widget _buildProgressIndicator(double value, double max, Color color) {
-    double progress = (value / max).clamp(0.0, 1.0);
+    double progress = ((value * valeur_en_cour) / max).clamp(0.0, 1.0);
     return SizedBox(
       width: 60,
       child: Stack(

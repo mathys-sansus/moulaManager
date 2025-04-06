@@ -46,9 +46,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
       ),
 
 
-    // 📌 Actions à droite
+    //Actions à droite
       actions: [
-        // 🏠 Bouton Accueil
+        // Bouton Accueil
         IconButton(
           icon: const Icon(Icons.home, color: Colors.white),
           onPressed: () {
@@ -59,7 +59,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
           },
         ),
 
-        // 🍔 Menu Hamburger sous forme de PopupMenuButton
+        //Menu Hamburgeur
         PopupMenuButton<String>(
           icon: const Icon(Icons.menu, color: Colors.white), // Icône hamburger
           onSelected: (value) {

@@ -79,7 +79,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
             title: Text(
-              '${depense.type} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}',
+              '${AppLocalizations.of(context)!.lookup(depense.type)} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}',
               style: const TextStyle(fontSize: 16),
             ),
             subtitle: Text(depense.description ?? ''),
@@ -205,10 +205,10 @@ class _ListeDepensesState extends State<ListeDepenses> {
 extension on AppLocalizations {
   lookup(String category) {
     switch (category) {
-      case 'food': return food;
-      case 'car': return car;
-      case 'housing': return housing;
-      case 'other': return other;
+      case 'Food': return food;
+      case 'Car': return car;
+      case 'Housing': return housing;
+      case 'Other': return other;
       default: return '';
     }
   }

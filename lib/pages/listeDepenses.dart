@@ -139,7 +139,7 @@ class _ListeDepensesState extends State<ListeDepenses> {
                         crossAxisAlignment: CrossAxisAlignment.start,  // Alignement du texte à gauche
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${depense.type} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}', style: const TextStyle(fontSize: 16)),
+                          Text('${AppLocalizations.of(context)!.lookup(depense.type)} - ${(depense.montant * valeur_en_cour).toStringAsFixed(2)} ${boolSwitch ? "\$" : "€"}', style: const TextStyle(fontSize: 16)),
                           Text(depense.description ?? '', style: const TextStyle(fontSize: 12)),
                         ],
                       ),
